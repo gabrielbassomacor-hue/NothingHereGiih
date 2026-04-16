@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contagem Regressiva - Impacto</title>
+    <title>Contagem Regressiva</title>
     <style>
-        /* Estilos globais com a nova cor de fundo */
+        /* Fundo completamente preto */
         body {
-            background-color: rgb(31, 31, 31);
-            color: white;
-            /* Fonte impactante aplicada a todo o documento */
+            background-color: #000000;
+            /* Cor do texto em RGB 31, 31, 31 */
+            color: rgb(31, 31, 31);
             font-family: 'Impact', 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
             display: flex;
             flex-direction: column;
@@ -18,49 +18,51 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            text-transform: uppercase; /* Deixa o texto em caixa alta para maior impacto */
+            text-transform: uppercase;
         }
 
         /* Estilo do cronômetro */
         #timer {
-            font-size: 8rem; /* Aumentado para destacar a nova fonte */
+            font-size: 8rem;
             font-weight: normal;
             letter-spacing: 8px;
             font-variant-numeric: tabular-nums;
         }
 
-        /* Estilo do texto inferior */
+        /* Nova frase com a mesma cor do texto */
         #subtitle {
-            font-size: 1.8rem;
-            margin-top: 10px;
-            letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.8); /* Branco levemente transparente */
+            font-size: 1.6rem;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 0 20px;
         }
 
-        /* Estilo do quadrado clicável com a cor RGB 15, 15, 15 */
+        /* Estilo do quadrado em RGB 15, 15, 15 */
         #square-link {
             display: none;
             margin-top: 50px;
             width: 150px;
             height: 150px;
             background-color: rgb(15, 15, 15);
-            color: white;
+            /* Texto dentro do quadrado para visibilidade */
+            color: rgb(31, 31, 31);
             text-decoration: none;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil para destacar do fundo */
+            font-size: 1.2rem;
+            border: 1px solid rgb(31, 31, 31);
             transition: all 0.3s ease;
             cursor: pointer;
         }
 
         #square-link:hover {
-            transform: scale(1.1);
-            background-color: rgb(0, 0, 0);
-            border-color: white;
+            transform: scale(1.05);
+            background-color: rgb(31, 31, 31);
+            color: #000000;
         }
 
-        /* Animação para piscar */
+        /* Animação para piscar o 00:00:00 */
         .piscar {
             animation: piscar-animacao 0.8s step-start infinite;
         }
@@ -69,9 +71,9 @@
             50% { opacity: 0; }
         }
 
-        /* Ajustes para telas menores */
+        /* Responsividade para celular */
         @media (max-width: 600px) {
-            #timer { font-size: 4rem; }
+            #timer { font-size: 3.5rem; letter-spacing: 4px; }
             #subtitle { font-size: 1rem; }
         }
     </style>
@@ -109,7 +111,6 @@
 
             const format = (num) => num.toString().padStart(2, '0');
 
-            // Exibe dias apenas se houver mais de 24h restantes
             if (days > 0) {
                 timerElement.innerHTML = `${format(days)}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
             } else {
