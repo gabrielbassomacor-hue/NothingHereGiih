@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem Regressiva</title>
+    <style>
+        /* Estilos globais */
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Estilo do cronômetro */
+        #timer {
+            font-size: 5rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            font-variant-numeric: tabular-nums; /* Mantém os números alinhados */
+        }
+
+        /* Estilo do texto inferior */
+        #subtitle {
+            font-size: 1.5rem;
+            margin-top: 15px;
+            color: #dddddd;
+        }
+
+        /* Estilo do quadrado clicável (inicialmente oculto) */
+        #square-link {
+            display: none; /* Oculto até o tempo acabar */
+            margin-top: 40px;
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px; /* Cantos levemente arredondados para melhor design, remova se quiser um quadrado perfeito */
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        #square-link:hover {
+            transform: scale(1.05);
+            background-color: #f0f0f0;
+        }
+
+        /* Classe de animação para fazer o texto piscar */
+        .piscar {
+            animation: piscar-animacao 1s step-start infinite;
+        }
+
+        @keyframes piscar-animacao {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="timer">Carregando...</div>
+    <div id="subtitle">O tempo é inimigo da perfeição</div>
+
+    <a id="square-link" href="https://gabrielmacor.github.io/i-Purple-You---Giih/">Entrar</a>
+
+    <script>
+        // Define a data alvo: 17 de Abril de 2026 às 12:00:00 (Formato ISO)
+        const targetDate = new Date("2026-04-17T12:00:00").getTime();
+
+        const timerElement = document.getElementById("timer");
+        const squareLink = document.getElementById("square-link");
+
+        // Atualiza o contador a cada 1 segundo (1000 milissegundos)
+        const updateTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Condição para quando o tempo acabar
+            if (distance <= 0) {
+                clearInterval(updateTimer); // Para o contador
+                timerElement.innerHTML = "00:00:00"; // Trava em zero
+                timerElement.classList.add("piscar"); // Adiciona o efeito de piscar
+                squareLink.style.display = "flex"; // Revela o quadrado
+                return;
+            }
+
+            // Cálculos matemáticos para dias, horas, minutos e segundos
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Função para garantir que os números sempre tenham 2 dígitos (ex: 05 em vez de 5)
+            const format = (num) => num.toString().padStart(2, '0');
+
+            // Exibe o resultado. Se faltarem dias, ele mostra os dias. Se não, apenas HH:MM:SS
+            if (days > 0) {
+                timerElement.innerHTML = `${format(days)}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
+            } else {
+                timerElement.innerHTML = `${format(hours)}:${format(minutes)}:${format(seconds)}`;
+            }
+
+        }, 1000);
+    </script>
+</body>
+</html>
